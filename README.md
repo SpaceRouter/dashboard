@@ -9,7 +9,7 @@ Run:
 Query sample :
 ---------
 
-CPU Usage for Linux
+CPU Usage over 5 minutes
 
 	#Average
 	100 - (avg by (instance) (irate(node_cpu_seconds_total{job="nodeexporter",mode="idle"}[5m])) * 100)
@@ -18,15 +18,15 @@ CPU Usage for Linux
 	100 - (max by (instance) (irate(node_cpu_seconds_total{job="nodeexporter",mode="idle"}[5m])) * 100)
 
 	#Maximum
-	100 - (min by (instance) (irate(node_cpu_seconds_total{job="nodeexporter",mode="idle"}[5m]))
+	100 - (min by (instance) (irate(node_cpu_seconds_total{job="nodeexporter",mode="idle"}[5m])) * 100)
 
-Memory Usage for Linux
+Memory Usage over 5 minutes
 
-	#Avarage:
-	100 * (1 - ((avg_over_time(node_memory_MemFree_bytes{job=~"nodeexporter"}[30d]) + avg_over_time(node_memory_Cached_bytes{job=~"nodeexporter"}[30d]) + avg_over_time(node_memory_Buffers_bytes{job=~"nodeexporter"}[30d])) / avg_over_time(node_memory_MemTotal_bytes{job=~"nodeexporter"}[30d])))
-
-	#Maximum:
-	100 * (1 - ((min_over_time(node_memory_MemFree_bytes{job=~"nodeexporter"}[30d]) + min_over_time(node_memory_Cached_bytes{job=~"nodeexporter"}[30d]) + min_over_time(node_memory_Buffers_bytes{job=~"nodeexporter"}[30d])) / min_over_time(node_memory_MemTotal_bytes{job=~"nodeexporter"}[30d])))
+	#Average:
+	100 * (1 - ((avg_over_time(node_memory_MemFree_bytes{job="nodeexporter"}[5m]) + avg_over_time(node_memory_Cached_bytes{job="nodeexporter"}[5m]) + avg_over_time(node_memory_Buffers_bytes{job="nodeexporter"}[5m])) / avg_over_time(node_memory_MemTotal_bytes{job="nodeexporter"}[5m])))
 
 	#Minimum
-	100 * (1 - ((max_over_time(node_memory_MemFree_bytes{job=~"nodeexporter"}[30d]) + max_over_time(node_memory_Cached_bytes{job=~"nodeexporter"}[30d]) + max_over_time(node_memory_Buffers_bytes{job=~"nodeexporter"}[30d])) / max_over_time(node_memory_MemTotal_bytes{job=~"nodeexporter"}[30d])))
+	100 * (1 - ((max_over_time(node_memory_MemFree_bytes{job="nodeexporter"}[5m]) + max_over_time(node_memory_Cached_bytes{job="nodeexporter"}[5m]) + max_over_time(node_memory_Buffers_bytes{job="nodeexporter"}[5m])) / max_over_time(node_memory_MemTotal_bytes{job="nodeexporter"}[5m])))
+
+	#Maximum:
+	100 * (1 - ((min_over_time(node_memory_MemFree_bytes{job="nodeexporter"}[5m]) + min_over_time(node_memory_Cached_bytes{job="nodeexporter"}[5m]) + min_over_time(node_memory_Buffers_bytes{job="nodeexporter"}[5m])) / min_over_time(node_memory_MemTotal_bytes{job="nodeexporter"}[5m])))
