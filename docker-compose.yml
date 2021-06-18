@@ -1,8 +1,9 @@
-version: '3'
+version: '3.4'
 services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
+#    network_mode: host
     ports:
       - "9090:9090"
     volumes:
@@ -11,6 +12,7 @@ services:
   nodeexporter:
     image: prom/node-exporter
     container_name: nodeexporter
+    network_mode: host
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
