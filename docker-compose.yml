@@ -1,13 +1,18 @@
-version: '3.4'
+version: "3"
 services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-#    network_mode: host
-    ports:
-      - "9090:9090"
+    networks:
+     - traefik-public
+    labels:
+      traefik.http.services.dashboard.loadbalancer.server.port: '9090'
+      traefik.http.routers.dashboard.rule: (Host(`api.opengate.lan`) && PathPrefix(`/api/v1`))
+      traefik.http.routers.dashboard.entrypoints: web
+      traefik.enable: 'true'
+      traefik.http.routers.dashboard.service: dashboard
     volumes:
-      - "./etc/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "/etc/sr/dashboard/data/prometheus.yml:/etc/prometheus/prometheus.yml"
     restart: always
   nodeexporter:
     image: prom/node-exporter
@@ -23,3 +28,6 @@ services:
       - '--path.sysfs=/host/sys'
       - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
     restart: always
+networks:
+  traefik-public:
+    external: true
